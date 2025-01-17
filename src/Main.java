@@ -1,31 +1,57 @@
 import java.util.Scanner;
-public class Main {
+class Main{
     public static void main(String args[]){
         Board board=new Board();
-        board.setBoard();
-        Player white=new WhitePlayer();
-        Player black=new BlackPlayer();
-        int moveNum=0;
-        board.printBoard();
+        boolean white=true;
         while(true){
             Scanner scanner=new Scanner(System.in);
-            if(moveNum%2==0){
-                System.out.println("It's white to move!");
+            if(white){
+                System.out.println("It is white's turn to move.");
             }else{
-                System.out.println("It's black to move!");
+                System.out.println("It is black's turn to move.");
             }
             String move=scanner.nextLine();
-            int x=move.charAt(0)-'0';
-            int y=move.charAt(1)-'0';
-            int z=move.charAt(2)-'0';
-            int w=move.charAt(3)-'0';
-            if(moveNum%2==0){
-                white.move(board,x,y,z,w);
-            }else{
-                black.move(board,x,y,z,w);
+            if(move.length()!=4){
+                System.out.println("Invalid input! Must be a string of length 4.");
+                continue;
             }
-            board.printBoard();
-            moveNum+=1;
+            char x=move.charAt(0);
+            if("abcdefgh".indexOf(x)==-1){
+                System.out.println("Invalid input! First character is invalid.");
+                continue;
+            }
+            char y=move.charAt(1);
+            if("12345678".indexOf(y)==-1){
+                System.out.println("Invalid input! Second character is invalid.");
+                continue;
+            }
+            char a=move.charAt(2);
+            if("abcdefgh".indexOf(a)==-1){
+                System.out.println("Invalid input! Third character is invalid.");
+                continue;
+            }
+            char b=move.charAt(3);
+            if("12345678".indexOf(b)==-1){
+                System.out.println("Invalid input! Fourth character is invalid.");
+                continue;
+            }
+            if(board.isEmpty(x,y)){
+                System.out.println("There is no piece at ("+x+","+y+")!");
+                continue;
+            }
+            if(board.getColor(x,y)=='b' && white){
+                System.out.println("The piece you have chosen is black. It's white's turn to move!");
+                continue;
+            }
+            if(board.getColor(x,y)=='w' && !white){
+                System.out.println("The piece you have chosen is white. It's black's turn to move!");
+                continue;
+            }
+            if(!board.validMove(x,y,a,b)){
+                System.out.println("The move you have chosen is invalid!");
+            }
+            board.move(x,y,a,b);
+            white=!white;
         }
     }
 }

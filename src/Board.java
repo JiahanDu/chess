@@ -1,70 +1,95 @@
-public class Board {
-    Piece[][] board;
-    WhitePlayer white;
-    BlackPlayer black;
-    // The chess board is an eight by eight 2D array; the setBoard method initializes the board.
-    void setBoard() {
-        this.board = new Piece[][]{{new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook()},
-                {new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn()},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn()},
-                {new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook()}
-        };
-        for(int j=0;j<8;j++){
-            for(int i=0;i<2;i++){
-                this.board[i][j].ID='w';
-            }
-            for (int i=6;i<8;i++){
-                this.board[i][j].ID='b';
+import java.util.Scanner;
+public class Board{
+    boolean whiteLongCastle;
+    boolean whiteShortCastle;
+    boolean blackLongCastle;
+    boolean blackShortCastle;
+    String[][] board;
+    boolean isEmpty(char x, char y){
+        return this.board[x-'a'][y-'0'].isEmpty();
+    }
+    char getColor(char x,char y){
+        return this.board[x-'a'][y-'0'].charAt(0);
+    }
+    char getType(char x, char y){
+        return this.board[x-'a'][y-'0'].charAt(1);
+    }
+    void setPiece(char color, char type, char x, char y){
+        this.board[x-'a'][y-'0']=""+color+type;
+    }
+    void removePiece(char x,char y){
+        this.board[x-'a'][y-'0']="";
+    }
+    void setBoard(){
+        this.board=new String[8][8];
+        this.setPiece('w','r','a','1');
+        this.setPiece('w','n','b','1');
+        this.setPiece('w','b','c','1');
+        this.setPiece('w','q','d','1');
+        this.setPiece('w','k','e','1');
+        this.setPiece('w','b','f','1');
+        this.setPiece('w','n','g','1');
+        this.setPiece('w','r','h','1');
+        for(char x:"abcdefgh".toCharArray()){
+            this.setPiece('w','p',x,'2');
+        }
+        this.setPiece('b','r','a','8');
+        this.setPiece('b','n','b','8');
+        this.setPiece('b','b','c','8');
+        this.setPiece('b','q','d','8');
+        this.setPiece('b','k','e','8');
+        this.setPiece('b','b','f','8');
+        this.setPiece('b','n','g','8');
+        this.setPiece('b','r','h','8');
+        for(char x:"abcdefgh".toCharArray()){
+            this.setPiece('b','p',x,'7');
+        }
+        for(int i=0;i<=7;i++){
+            for(int j=2;j<=5;j++){
+                this.board[i][j]="";
             }
         }
     }
-    boolean notBlocked(int x, int y, int a, int b){
-        if(this.board[a][b]!=null && this.board[a][b].ID==this.board[x][y].ID){
-            return false;
-        }
-        if(x==a){
-            for(int i=1;i<Math.abs(y-b);i++){
-                if (this.board[x][Math.min(y,b)+i]!=null) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        if(y==b){
-            for(int i=1;i<Math.abs(x-a);i++){
-                if(this.board[Math.min(x,a)+i][y]!=null){
-                    return false;
-                }
-            }
-            return true;
-        }
-        if(Math.abs(x-a)==Math.abs(y-b)){
-            int dx= (x<a)? 1:-1;
-            int dy= (y<b)? 1:-1;
-            for(int i=1;i<Math.abs(x-a);i++){
-                if(this.board[x+dx*i][y+dy*i]!=null) {
-                    return false;
-                }
-            }
-            return true;
-        }
+
+    boolean validMove(char x, char y, char a, char b){
         return true;
     }
 
-    void printBoard(){
-        for(int i=7;i>=0;i--){
-            for (int j=0;j<8;j++){
-                if(board[i][j]!=null){
-                    board[i][j].printPiece();
-                }else{
-                    System.out.print("  |");
-                }
-            }
-            System.out.println("\n_________________________________");
+    void move(char x,char y,char a,char b){
+        this.setPiece(this.getColor(x,y),this.getType(x,y),a,b);
+        if(b=='8'&& this.getType(a,b)=='p'){
+            Scanner scanner= new Scanner(System.in);
+            System.out.println("Enter q,r,b,n for promotion to a Queen, a rook, a bishop or a knight.");
+            char type=scanner.next().charAt(0);
+            this.setPiece('w',type,a,b);
         }
+        if(b=='1' && this.getType(a,b)=='p'){
+            Scanner scanner=new Scanner(System.in);
+            System.out.println("Enter q,r,b,n for promotion to a Queen, a rook, a bishop or a knight.");
+            char type=scanner.next().charAt(0);
+            this.setPiece('b',type,a,b);
+        }
+        if(x=='e' && y=='0' && this.getColor(x,y)=='w' && this.getType(x,y)=='k' && a=='g' && b=='1'){
+            this.setPiece('w','r','f','1');
+            this.whiteShortCastle=false;
+        }
+        if(x=='e' && y=='0' && this.getColor(x,y)=='w' && this.getType(x,y)=='k' && a=='c' && b=='1'){
+            this.setPiece('w','r','d','1');
+            this.whiteLongCastle=false;
+        }
+        if(x=='e' && y=='8' && this.getColor(x,y)=='b' && this.getType(x,y)=='k' && a=='g' && b=='8'){
+            this.setPiece('b','r','f','8');
+            this.blackShortCastle=false;
+        }
+        if(x=='e' && y=='8' && this.getColor(x,y)=='b' && this.getType(x,y)=='k' && a=='c' && b=='8'){
+            this.setPiece('b','r','d','8');
+            this.blackLongCastle=false;
+        }
+        this.removePiece(x,y);
     }
+
+    void printBoard(){
+        ;
+    }
+
 }
