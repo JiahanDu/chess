@@ -2,8 +2,10 @@ import java.util.Scanner;
 class Main{
     public static void main(String args[]){
         Board board=new Board();
+        board.setBoard();
         boolean white=true;
         while(true){
+            board.printBoard();
             Scanner scanner=new Scanner(System.in);
             if(white){
                 System.out.println("It is white's turn to move.");

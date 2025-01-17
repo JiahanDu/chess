@@ -6,19 +6,19 @@ public class Board{
     boolean blackShortCastle;
     String[][] board;
     boolean isEmpty(char x, char y){
-        return this.board[x-'a'][y-'0'].isEmpty();
+        return this.board[x-'a'][y-'1'].isEmpty();
     }
     char getColor(char x,char y){
-        return this.board[x-'a'][y-'0'].charAt(0);
+        return this.board[x-'a'][y-'1'].charAt(0);
     }
     char getType(char x, char y){
-        return this.board[x-'a'][y-'0'].charAt(1);
+        return this.board[x-'a'][y-'1'].charAt(1);
     }
     void setPiece(char color, char type, char x, char y){
-        this.board[x-'a'][y-'0']=""+color+type;
+        this.board[x-'a'][y-'1']=""+color+type;
     }
     void removePiece(char x,char y){
-        this.board[x-'a'][y-'0']="";
+        this.board[x-'a'][y-'1']="  ";
     }
     void setBoard(){
         this.board=new String[8][8];
@@ -46,7 +46,7 @@ public class Board{
         }
         for(int i=0;i<=7;i++){
             for(int j=2;j<=5;j++){
-                this.board[i][j]="";
+                this.board[i][j]="  ";
             }
         }
     }
@@ -89,7 +89,14 @@ public class Board{
     }
 
     void printBoard(){
-        ;
+        for(int i=7;i>=0;i--){
+            System.out.print((i+1)+" ");
+            for(int j=0;j<8;j++){
+                System.out.print(this.board[j][i]+" |");
+            }
+            System.out.println("\n-------------------------------------------");
+        }
+        System.out.println("   a   b   c   d   e   f   g   h   ");
     }
 
 }
