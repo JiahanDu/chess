@@ -55,6 +55,7 @@ public class Board{
         return true;
     }
 
+
     void move(char x,char y,char a,char b){
         this.setPiece(this.getColor(x,y),this.getType(x,y),a,b);
         if(b=='8'&& this.getType(a,b)=='p'){
@@ -97,6 +98,26 @@ public class Board{
             System.out.println("\n-------------------------------------------");
         }
         System.out.println("   a   b   c   d   e   f   g   h   ");
+    }
+
+    boolean whiteWins(){
+        return false;
+    }
+
+    boolean blackWins(){
+        return false;
+    }
+
+    boolean threeFold(){
+        return false;
+    }
+
+    boolean staleMate(){
+        return false;
+    }
+
+    boolean insufficientMaterial(){
+        return false;
     }
 
 }
