@@ -51,6 +51,7 @@ class Main{
             }
             if(!board.validMove(x,y,a,b)){
                 System.out.println("The move you have chosen is invalid!");
+                continue;
             }
             board.move(x,y,a,b);
             white=!white;

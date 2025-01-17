@@ -1,10 +1,12 @@
 import java.util.Scanner;
+import java.util.HashSet;
 public class Board{
     boolean whiteLongCastle;
     boolean whiteShortCastle;
     boolean blackLongCastle;
     boolean blackShortCastle;
     String[][] board;
+    HashSet<String> pastPositions;
     boolean isEmpty(char x, char y){
         return this.board[x-'a'][y-'1'].isEmpty();
     }
@@ -70,7 +72,7 @@ public class Board{
                 return true;
             }else if(y==b){
                 for(int i=Math.min(a,x)+1; i<Math.max(a,x);i++){
-                    if(!this.isEmpty((char) i,b)){
+                    if(!this.isEmpty((char) i, b)){
                         return false;
                     }
                 }
@@ -79,9 +81,27 @@ public class Board{
                 return false;
             }
         }
+        if(type=='b'){
+            if(x-a==y-b){
+                for(int i=Math.min(x,a)+1;i<Math.max(x,a);i++){
+                    if(!this.isEmpty((char)i,(char) (i-(x-a)))){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if(x+y==a+b){
+                for(int i=Math.min(x,a)+1;i<Math.max(x,a);i++){
+                    if(!this.isEmpty((char) i,(char) (x+y-i))){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
         return true;
     }
-
 
     void move(char x,char y,char a,char b){
         this.setPiece(this.getColor(x,y),this.getType(x,y),a,b);
