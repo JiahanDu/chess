@@ -52,6 +52,33 @@ public class Board{
     }
 
     boolean validMove(char x, char y, char a, char b){
+        char type=this.getType(x,y);
+        char color=this.getColor(x,y);
+        if (!this.isEmpty(a,b) && this.getColor(x,y)==this.getColor(a,b)){
+            return false;
+        }
+        if(type=='n'){
+            return (Math.abs(a-x)==2 && Math.abs(b-y)==1) || (Math.abs(a-x)==1 && Math.abs(b-y)==2);
+        }
+        if(type=='r'){
+            if(x==a){
+                for(int i=Math.min(b,y)+1;i<Math.max(b,y);i++){
+                    if(!this.isEmpty(a,(char) i)){
+                        return false;
+                    }
+                }
+                return true;
+            }else if(y==b){
+                for(int i=Math.min(a,x)+1; i<Math.max(a,x);i++){
+                    if(!this.isEmpty((char) i,b)){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
         return true;
     }
 
@@ -103,6 +130,7 @@ public class Board{
     boolean whiteWins(){
         return false;
     }
+
 
     boolean blackWins(){
         return false;
