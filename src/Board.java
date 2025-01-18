@@ -8,7 +8,7 @@ public class Board{
     String[][] board;
     HashSet<String> pastPositions;
     boolean isEmpty(char x, char y){
-        return this.board[x-'a'][y-'1'].isEmpty();
+        return this.board[x-'a'][y-'1']=="  ";
     }
     char getColor(char x,char y){
         return this.board[x-'a'][y-'1'].charAt(0);
@@ -132,17 +132,31 @@ public class Board{
             }
             return false;
         }
-        if(type=='p' && this.getColor()=='w'){
-            ;
+        if(type=='p' && this.getColor(x,y)=='w'){
+            if(x==a && b-y==1){
+                return this.isEmpty(a,b);
+            }
+            if(x==a && b-y==2){
+                return this.isEmpty(a,b) && this.isEmpty(a,(char) (b-1));
+            }
+            if(Math.abs(a-x)==1 && b-y==1){
+                return !this.isEmpty(a,b) && this.getColor(a,b)!=this.getColor(x,y);
+            }
+            return false;
+            //Need to implement en Passant.
         }
-        if(type=='p' && this.getColor()=='b'){
-            ;
-        }
-        if(type=='k' && this.getColor()=='w'){
-            ;
-        }
-        if(type=='k' && this.getColor()=='b'){
-            ;
+        if(type=='p' && this.getColor(x,y)=='b'){
+            if(x==a && b-y==-1){
+                return this.isEmpty(a,b);
+            }
+            if(x==a && b-y==-2){
+                return this.isEmpty(a,b) && this.isEmpty(a,(char) (b+1));
+            }
+            if(Math.abs(a-x)==1 && b-y==-1){
+                return !this.isEmpty(a,b) && this.getColor(a,b)!=this.getColor(x,y);
+            }
+            return false;
+            //Need to implement en Passant.
         }
         return true;
     }
