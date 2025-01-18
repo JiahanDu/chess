@@ -41,6 +41,10 @@ class Main{
                 System.out.println("There is no piece at ("+x+","+y+")!");
                 continue;
             }
+            if(!board.isEmpty(a,b) && board.getColor(a,b)==board.getColor(x,y)){
+                System.out.println("There is another piece of yours at ("+x+","+y+")!");
+                continue;
+            }
             if(board.getColor(x,y)=='b' && white){
                 System.out.println("The piece you have chosen is black. It's white's turn to move!");
                 continue;

@@ -132,6 +132,18 @@ public class Board{
             }
             return false;
         }
+        if(type=='p' && this.getColor()=='w'){
+            ;
+        }
+        if(type=='p' && this.getColor()=='b'){
+            ;
+        }
+        if(type=='k' && this.getColor()=='w'){
+            ;
+        }
+        if(type=='k' && this.getColor()=='b'){
+            ;
+        }
         return true;
     }
 
