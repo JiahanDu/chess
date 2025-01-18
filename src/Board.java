@@ -25,6 +25,7 @@ public class Board{
         this.board[x-'a'][y-'1']="  ";
     }
     void setBoard(){
+        this.moveHistory=new ArrayList<>();
         this.board=new String[8][8];
         this.setPiece('w','r','a','1');
         this.setPiece('w','n','b','1');
@@ -142,10 +143,13 @@ public class Board{
                 return this.isEmpty(a,b) && this.isEmpty(a,(char) (b-1));
             }
             if(Math.abs(a-x)==1 && b-y==1){
-                return !this.isEmpty(a,b) && this.getColor(a,b)!=this.getColor(x,y);
+                if(!this.isEmpty(a,b)){
+                    return this.getColor(a,b)!=this.getColor(x,y);
+                }else {
+                    return y == '5' && b == '6' && Math.abs(x - a) == 1 && !this.moveHistory.isEmpty() && this.moveHistory.get(this.moveHistory.size() - 1).equals( ("" + a + '7' + a + '5')) && this.getType(a, '5') == 'p';
+                }
             }
             return false;
-            //Need to implement en Passant.
         }
         if(type=='p' && this.getColor(x,y)=='b'){
             if(x==a && b-y==-1){

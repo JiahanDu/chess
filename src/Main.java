@@ -6,6 +6,7 @@ class Main{
         boolean white=true;
         while(true){
             board.printBoard();
+            System.out.println(board.moveHistory);
             Scanner scanner=new Scanner(System.in);
             if(white){
                 System.out.println("It is white's turn to move.");
@@ -58,6 +59,7 @@ class Main{
                 continue;
             }
             board.move(x,y,a,b);
+            board.moveHistory.add(""+x+y+a+b);
             white=!white;
         }
     }
