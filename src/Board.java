@@ -1,10 +1,12 @@
 import java.util.Scanner;
 import java.util.HashSet;
+import java.util.ArrayList;
 public class Board{
     boolean whiteLongCastle;
     boolean whiteShortCastle;
     boolean blackLongCastle;
     boolean blackShortCastle;
+    ArrayList<String> moveHistory;
     String[][] board;
     HashSet<String> pastPositions;
     boolean isEmpty(char x, char y){
