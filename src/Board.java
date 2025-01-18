@@ -100,6 +100,38 @@ public class Board{
             }
             return false;
         }
+        if(type=='q'){
+            if(x==a){
+                for(int i=Math.min(b,y)+1;i<Math.max(b,y);i++){
+                    if(!this.isEmpty(a,(char) i)){
+                        return false;
+                    }
+                }
+                return true;
+            }else if(y==b){
+                for(int i=Math.min(a,x)+1; i<Math.max(a,x);i++){
+                    if(!this.isEmpty((char) i, b)){
+                        return false;
+                    }
+                }
+                return true;
+            }else if(x-a==y-b){
+                for(int i=Math.min(x,a)+1;i<Math.max(x,a);i++){
+                    if(!this.isEmpty((char)i,(char) (i-(x-a)))){
+                        return false;
+                    }
+                }
+                return true;
+            }else if(x+y==a+b){
+                for(int i=Math.min(x,a)+1;i<Math.max(x,a);i++){
+                    if(!this.isEmpty((char) i,(char) (x+y-i))){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
         return true;
     }
 
