@@ -56,6 +56,10 @@ public class Board{
         }
     }
 
+    boolean attacked(char x, char y){
+
+    }
+
     boolean validMove(char x, char y, char a, char b){
         char type=this.getType(x,y);
         char color=this.getColor(x,y);
